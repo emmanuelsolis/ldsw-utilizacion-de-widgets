@@ -21,11 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+
 
 val typography = Typography(
     displayLarge = TextStyle(fontSize = 30.sp)
@@ -37,14 +39,71 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LDSWUtilizaciónDeWidgetsTheme {
-                HeaderComposable(
-                    title = "WIDGETS",
-                    profileImage = painterResource(id = R.drawable.baseline_person_24), // Reemplazar con tu imagen
-                    name = "Emmanuel Solis",
-                    initials = "ESR"
-                )
+
             }
         }
+    }
+}
+
+
+@Composable
+fun AppInterface() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(0.dp),
+        verticalArrangement = Arrangement.spacedBy(0.dp)
+    ) {
+        //Encabezado con Imagen
+        HeaderComposable(
+            title = "WIDGETS",
+            profileImage = painterResource(id = R.drawable.baseline_person_24),
+            name = "Emmanuel Solis",
+            initials = "ESR"
+        )
+        //Seccion con Imagen y Texto
+        ImageWithText(
+            image = painterResource(id = R.drawable.nave),
+            text = "Se avecina la era de los coches voladores"
+        )
+        //Card con contenido
+    }
+}
+
+@Composable
+fun ImageWithText(image: Painter, text: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = image,
+            contentDescription = "coche volador",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            contentScale = ContentScale.Crop
+        )
+        // Overlay sobre la imagen
+        Box(
+            modifier = Modifier
+                .matchParentSize() // Ocupa todo el espacio de la imagen
+                .background(Color.Black.copy(alpha = 0.35f))
+        )
+        Text(
+            text = text,
+            fontWeight = FontWeight.Medium,
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 16.sp,
+                fontFamily = FontFamily.Cursive
+            ),
+            modifier = Modifier
+                .padding(5.dp)
+                .align(Alignment.Center)
+        )
     }
 }
 
@@ -54,15 +113,13 @@ fun HeaderComposable(title: String, profileImage: Painter, name: String, initial
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.LightGray)
-            .padding(16.dp),
+            .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         HeaderTitle(title = title)
         ProfileSection(
-            profileImage = profileImage,
-            name = name,
-            initials = initials
+            profileImage = profileImage, name = name, initials = initials
         )
     }
 }
@@ -70,8 +127,7 @@ fun HeaderComposable(title: String, profileImage: Painter, name: String, initial
 @Composable
 fun HeaderTitle(title: String) {
     Text(
-        text = title,
-        style = TextStyle(
+        text = title, style = TextStyle(
             fontSize = 24.sp,
             color = Color.Black,
             fontFamily = FontFamily.SansSerif,
@@ -84,12 +140,11 @@ fun HeaderTitle(title: String) {
 fun ProfileSection(profileImage: Painter, name: String, initials: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         ProfileImage(profileImage = profileImage, initials = initials)
         Text(
-            text = name,
-            style = TextStyle(
+            text = name, style = TextStyle(
                 fontSize = 16.sp,
                 color = Color.Black,
                 fontFamily = FontFamily.SansSerif,
@@ -103,27 +158,19 @@ fun ProfileSection(profileImage: Painter, name: String, initials: String) {
 fun ProfileImage(profileImage: Painter, initials: String) {
     Box(
         modifier = Modifier
-            .size(68.dp)
-            .clip(CircleShape),
-        contentAlignment = Alignment.Center
+            .size(58.dp)
+            .clip(CircleShape), contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = profileImage,
-            contentDescription = "Perfil",
-            modifier = Modifier.fillMaxSize()
+            painter = profileImage, contentDescription = "Perfil", modifier = Modifier.fillMaxSize()
         )
         // Texto encima de la imagen
         Text(
-            text = initials,
-            fontWeight = FontWeight.ExtraBold,
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 12.sp,
-                fontFamily = FontFamily.Monospace
-            ),
-            modifier = Modifier
+            text = initials, fontWeight = FontWeight.ExtraBold, style = TextStyle(
+                color = Color.White, fontSize = 12.sp, fontFamily = FontFamily.Monospace
+            ), modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 10.dp)
+                .padding(bottom = 9.dp)
         )
     }
 }
@@ -131,9 +178,7 @@ fun ProfileImage(profileImage: Painter, initials: String) {
 @Composable
 fun HeaderTexts(text: String, modifier: Modifier = Modifier) {
     Text(
-        text = text,
-        style = typography.displayLarge,
-        modifier = modifier
+        text = text, style = typography.displayLarge, modifier = modifier
     )
 }
 
@@ -144,9 +189,7 @@ fun ParraghaphTexts(
     fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize
 ) {
     Text(
-        text = text,
-        style = TextStyle(fontSize = fontSize),
-        modifier = modifier
+        text = text, style = TextStyle(fontSize = fontSize), modifier = modifier
     )
 }
 
@@ -154,11 +197,6 @@ fun ParraghaphTexts(
 @Composable
 fun Preview() {
     LDSWUtilizaciónDeWidgetsTheme {
-        HeaderComposable(
-            title = "WIDGETS",
-            profileImage = painterResource(id = R.drawable.baseline_person_24), // Reemplazar con tu imagen
-            name = "Emmanuel Solis",
-            initials = "ESR"
-        )
+        AppInterface()
     }
 }
