@@ -8,6 +8,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,7 +42,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LDSWUtilizaciónDeWidgetsTheme {
-
+                AppInterface()
             }
         }
     }
@@ -67,6 +70,57 @@ fun AppInterface() {
             text = "Se avecina la era de los coches voladores"
         )
         //Card con contenido
+        ContentCard(
+            image = painterResource(id = R.drawable.ic_launcher_foreground),
+            title = "Emmanuel Solis",
+            description = "Soy estudiante de Licenciatura en desarrollo de sistemas web"
+        )
+    }
+}
+
+@Composable
+fun ContentCard(image: Painter, title: String, description: String) {
+    Card(
+        modifier= Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            // Imagen con superposicion
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+            ){
+                // Imagen de fondo
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = "Imagen de fondo",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+                // Imagen de perfil en superposicion
+                Image(
+                    painter = image,
+                    contentDescription = "Imagen de perfil",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .height(150.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                )
+            }
+
+            HeaderTexts(text = title)
+            ParraghaphTexts(text = description)
+        }
     }
 }
 
@@ -83,6 +137,7 @@ fun ImageWithText(image: Painter, text: String) {
             contentDescription = "coche volador",
             modifier = Modifier
                 .fillMaxWidth()
+                .background(Color.Gray)
                 .height(200.dp),
             contentScale = ContentScale.Crop
         )
@@ -97,11 +152,11 @@ fun ImageWithText(image: Painter, text: String) {
             fontWeight = FontWeight.Medium,
             style = TextStyle(
                 color = Color.White,
-                fontSize = 16.sp,
-                fontFamily = FontFamily.Cursive
+                fontSize = 36.sp,
+                fontFamily = FontFamily.Serif
             ),
             modifier = Modifier
-                .padding(5.dp)
+                .padding(15.dp)
                 .align(Alignment.Center)
         )
     }
