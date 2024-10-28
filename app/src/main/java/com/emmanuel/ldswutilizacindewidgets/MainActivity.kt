@@ -9,9 +9,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -75,8 +80,68 @@ fun AppInterface() {
             title = "Emmanuel Solis",
             description = "Soy estudiante de Licenciatura en desarrollo de sistemas web"
         )
+        ButtonSection()
     }
 }
+
+@Composable
+fun ButtonSection() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ){
+            //Boton simple
+            Button(onClick = { /* Accion al hacer clic*/ }) {
+                Text(text = "Simple Button")
+            }
+            //Boton Contorneado(Outlined)
+            OutlinedButton(onClick = { /* Accion al hacer clic*/ }){
+                Text(text = "Outlined Button")
+            }
+        }
+       Row (
+           modifier = Modifier
+               .fillMaxWidth()
+               .padding(16.dp),
+           horizontalArrangement = Arrangement.spacedBy(12.dp)
+       ){
+           //Boton con Icono
+           Button(
+               onClick = { /* Acción al hacer clic */ },
+               colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EA)),
+               modifier = Modifier.size(150.dp, 50.dp)
+           ) {
+               Icon(
+                   painter = painterResource(id = R.drawable.baseline_person_24),
+                   contentDescription = "Icono",
+                   modifier = Modifier.size(50.dp)
+               )
+               Spacer(modifier = Modifier.width(8.dp))
+               Text("Button with Icon")
+           }
+
+           // Botón de ícono solo
+           IconButton(onClick = { /* Acción al hacer clic */ }) {
+               Icon(
+                   painter = painterResource(id = R.drawable.baseline_person_24),
+                   contentDescription = "Icono del botón",
+                   modifier = Modifier.size(50.dp)
+               )
+           }
+       }
+
+    }
+}
+
 
 @Composable
 fun ContentCard(image: Painter, title: String, description: String) {
