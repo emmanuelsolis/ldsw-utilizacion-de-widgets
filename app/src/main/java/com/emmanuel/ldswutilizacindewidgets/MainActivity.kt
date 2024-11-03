@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.Paragraph
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
@@ -64,23 +66,23 @@ fun AppInterface() {
     ) {
         //Encabezado con Imagen
         HeaderComposable(
-            title = "WIDGETS",
+            title = "Catalogo de peliculas",
             profileImage = painterResource(id = R.drawable.baseline_person_24),
             name = "Emmanuel Solis",
             initials = "ESR"
         )
         //Seccion con Imagen y Texto
         ImageWithText(
-            image = painterResource(id = R.drawable.nave),
-            text = "Se avecina la era de los coches voladores"
+            image = painterResource(id = R.drawable.portada),
+            text = "Bienvenido!!"
         )
         //Card con contenido
-        ContentCard(
-            image = painterResource(id = R.drawable.ic_launcher_foreground),
-            title = "Emmanuel Solis",
-            description = "Soy estudiante de Licenciatura en desarrollo de sistemas web"
-        )
-        ButtonSection()
+     //   ContentCard(
+        //    image = painterResource(id = R.drawable.ic_launcher_foreground),
+         //   title = "Emmanuel Solis",
+         //   description = "Soy estudiante de Licenciatura en desarrollo de sistemas web"
+       // )
+       // ButtonSection()
     }
 }
 
@@ -184,7 +186,7 @@ fun ContentCard(image: Painter, title: String, description: String) {
             }
 
             HeaderTexts(text = title)
-            ParraghaphTexts(text = description)
+            ParagraphTexts(text = description)
         }
     }
 }
@@ -194,16 +196,15 @@ fun ImageWithText(image: Painter, text: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp),
+            .fillMaxHeight(),
         contentAlignment = Alignment.Center
     ) {
         Image(
             painter = image,
-            contentDescription = "coche volador",
+            contentDescription = "Catalogo de peliculas",
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Gray)
-                .height(200.dp),
+                .fillMaxSize()
+                .background(Color.Gray),
             contentScale = ContentScale.Crop
         )
         // Overlay sobre la imagen
@@ -224,6 +225,30 @@ fun ImageWithText(image: Painter, text: String) {
                 .padding(15.dp)
                 .align(Alignment.Center)
         )
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 40.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_video_library_24),
+                contentDescription = "Icono de catalogo",
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(40.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            ParagraphTexts(
+                text = "Catalogo de Peliculas".uppercase(),
+                color = Color.White,
+                fontSize = 24.sp,
+            )
+        }
+
     }
 }
 
@@ -232,7 +257,7 @@ fun HeaderComposable(title: String, profileImage: Painter, name: String, initial
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(Color.White)
             .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -303,13 +328,14 @@ fun HeaderTexts(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ParraghaphTexts(
+fun ParagraphTexts(
     modifier: Modifier = Modifier,
     text: String,
-    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize
+    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
+    color: Color = Color.Unspecified
 ) {
     Text(
-        text = text, style = TextStyle(fontSize = fontSize), modifier = modifier
+        text = text, style = TextStyle(fontSize = fontSize, color = color, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold), modifier = modifier
     )
 }
 
